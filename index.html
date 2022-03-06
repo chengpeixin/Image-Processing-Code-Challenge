@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="./jquery.js"></script>
+<style>
+    * {
+        list-style: none;
+    }
+
+    #img-full {
+        display: flex;
+    }
+
+    #img-full li {
+        width: 400px;
+        height: 300px;
+        overflow: scroll;
+    }
+</style>
+
+<body>
+    <ul id="img-full">
+    </ul>
+</body>
+
+</html>
+
+<script>
+    const fileNames = ['photo-1.jfif', 'photo-2.jpg', 'photo-3.webp','DDDD.png']
+    $(function () {
+        fileNames.forEach(function (fileName, index) {
+            $('#img-full').append(`<li></li>`)
+            $.get({
+                url: `http://127.0.0.1:3000/img/${fileName}`,
+                xhrFields: {
+                    responseType: "blob"
+                },
+                success: function (data) {
+                    $('#img-full li').eq(index).html(`<img width=400 src="${window.URL.createObjectURL(data)}">`)
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+        })
+    })
+</script>
